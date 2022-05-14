@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sieu_cap_tinh_luong/bloc/cubit/worker_cubit.dart';
-import 'package:sieu_cap_tinh_luong/bloc_observer.dart';
+import 'package:sieu_cap_tinh_luong/config/bloc_observer.dart';
 import 'package:sieu_cap_tinh_luong/config/theme/theme.dart';
 import 'feature/home/home.dart';
 
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       create: (context) => WorkerCubit()..getWorkers(),
       child: MaterialApp(
         title: 'Siêu cấp tính lương',
+        debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.dark,
         theme: AppTheme.darkTheme,
         home: const HomePage(),

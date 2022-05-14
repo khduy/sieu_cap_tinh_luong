@@ -122,8 +122,12 @@ class _GridWorkers extends StatelessWidget {
                   size: 40,
                   color: Colors.white70,
                 ),
-                onTap: () {
-                  showWorkerInfor(context);
+                onTap: () async {
+                  var haveChanged = await showWorkerInfor(context);
+
+                  if (haveChanged ?? false) {
+                    context.read<WorkerCubit>().getWorkers();
+                  }
                 },
               );
             }
@@ -139,9 +143,13 @@ class _GridWorkers extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+              color: Colors.primaries[index % Colors.primaries.length],
               onTap: () {},
-              onLongPress: () {
-                showWorkerInfor(context, worker: worker);
+              onLongPress: () async {
+                var haveChanged = await showWorkerInfor(context, worker: worker);
+                if (haveChanged ?? false) {
+                  context.read<WorkerCubit>().getWorkers();
+                }
               },
             );
           },

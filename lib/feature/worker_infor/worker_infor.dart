@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:sieu_cap_tinh_luong/config/extension/string_extension.dart';
 import 'package:sieu_cap_tinh_luong/data/model/worker.dart';
 
 import '../../config/theme/theme.dart';
@@ -27,9 +29,21 @@ class _WorkerInforState extends State<WorkerInfor> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: widget.worker?.name);
-    basicController = TextEditingController(text: widget.worker?.basicSalary.toString());
-    overtimeController = TextEditingController(text: widget.worker?.overtimeSalary.toString());
+    if (widget.worker != null) {
+      nameController = TextEditingController(text: widget.worker?.name);
+
+      basicController = TextEditingController(
+        text: numberFormat.format(widget.worker?.basicSalary),
+      );
+
+      overtimeController = TextEditingController(
+        text: numberFormat.format(widget.worker?.overtimeSalary),
+      );
+    } else {
+      nameController = TextEditingController();
+      basicController = TextEditingController();
+      overtimeController = TextEditingController();
+    }
   }
 
   @override
@@ -51,7 +65,7 @@ class _WorkerInforState extends State<WorkerInfor> {
                   labelText: 'Tên',
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null || value.trim().isEmpty) {
                     return 'Chưa nhập tên kìa';
                   }
                   return null;
@@ -77,20 +91,41 @@ class _WorkerInforState extends State<WorkerInfor> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (widget.worker == null)
+                  if (widget.worker != null)
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await widget.worker!.delete();
+                          Navigator.pop(context, true);
+                        },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
                         ),
                         child: const Text('Xóa', style: TextStyle(color: Colors.white)),
                       ),
                     ),
-                  if (widget.worker == null) const SizedBox(width: 10),
+                  if (widget.worker != null) const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          final boxworker = Hive.box<Worker>('workers');
+                          var worker = Worker(
+                            name: nameController.text.trim().toTitleCase(),
+                            basicSalary: double.tryParse(basicController.text) ?? 0,
+                            overtimeSalary: double.tryParse(overtimeController.text) ?? 0,
+                            workingDays: widget.worker?.workingDays ?? [],
+                          );
+
+                          if (widget.worker != null) {
+                            await boxworker.put(widget.worker!.key, worker);
+                          } else {
+                            await boxworker.add(worker);
+                          }
+
+                          Navigator.pop(context, true);
+                        }
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff5985FF)),
                       ),
@@ -107,8 +142,8 @@ class _WorkerInforState extends State<WorkerInfor> {
   }
 }
 
-Future<Worker?> showWorkerInfor(BuildContext context, {Worker? worker, int? index}) async {
-  final result = await showDialog<Worker?>(
+Future<bool?> showWorkerInfor(BuildContext context, {Worker? worker, int? index}) async {
+  final result = await showDialog<bool?>(
     context: context,
     builder: (context) => AlertDialog(
       scrollable: true,
