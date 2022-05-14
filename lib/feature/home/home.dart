@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sieu_cap_tinh_luong/data/model/worker.dart';
+import 'package:sieu_cap_tinh_luong/feature/worker_infor/worker_infor.dart';
 
 import '../../bloc/cubit/worker_cubit.dart';
+import '../../widgets/custom_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,122 +12,141 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Siêu cấp tính lương'),
-      ),
-      body: BlocBuilder<WorkerCubit, WorkerState>(
-        bloc: context.read<WorkerCubit>(),
-        builder: (context, state) {
-          if (state is WorkerLoadSuccess) {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.5,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-              ),
-              padding: const EdgeInsets.all(30),
-              physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics(),
-              ),
-              itemCount: state.workers.length + 1,
-              itemBuilder: (context, index) {
-                if (index == state.workers.length) {
-                  return _GridItems(
-                    child: const Icon(
-                      Icons.add_rounded,
-                      size: 40,
-                    ),
-                    onTap: () {},
-                  );
-                }
-                final worker = state.workers[index];
-                return _GridItems(
-                  child: Text(
-                    worker.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xffF3F3F3),
-                    ),
-                  ),
-                  onTap: () {},
-                  onLongPress: () {},
-                );
-              },
-            );
-          }
-          if (state is WorkerLoadFailure) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  color: Colors.red.shade400,
-                  size: 72,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  'Lỗi rồi!',
+      body: SafeArea(
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Siêu cấp tính lương',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.red.shade400,
+                    fontFamily: 'Signika',
+                    fontSize: 24,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 30),
-                Text(
-                  state.message,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.red.shade400,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            );
-          }
+              ),
+            ),
+            BlocBuilder<WorkerCubit, WorkerState>(
+              bloc: context.read<WorkerCubit>(),
+              builder: (context, state) {
+                if (state is WorkerLoadSuccess) {
+                  return _GridWorkers(workers: state.workers);
+                }
 
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+                if (state is WorkerLoadFailure) {
+                  return _ErrorView(message: state.message);
+                }
+
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _GridItems extends StatelessWidget {
-  const _GridItems({
+class _ErrorView extends StatelessWidget {
+  const _ErrorView({
     Key? key,
-    required this.child,
-    required this.onTap,
-    this.onLongPress,
+    required this.message,
   }) : super(key: key);
 
-  final Widget child;
-  final VoidCallback onTap;
-  final VoidCallback? onLongPress;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: onTap,
-      onLongPress: onLongPress,
-      child: Container(
-        margin: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          color: const Color(0xff313133),
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.05),
-              spreadRadius: 2,
-            ),
-          ],
+    return SliverList(
+      delegate: SliverChildListDelegate([
+        Icon(
+          Icons.error_outline,
+          color: Colors.red.shade400,
+          size: 72,
         ),
-        child: Center(child: child),
+        const SizedBox(height: 10),
+        Text(
+          'Bị lỗi rồi!',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.red.shade400,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 30),
+        Text(
+          message,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.red.shade400,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ]),
+    );
+  }
+}
+
+class _GridWorkers extends StatelessWidget {
+  const _GridWorkers({
+    Key? key,
+    required this.workers,
+  }) : super(key: key);
+
+  final List<Worker> workers;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.all(16),
+      sliver: SliverGrid(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+          childAspectRatio: 1.5,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            if (index == workers.length) {
+              return CustomButton(
+                child: const Icon(
+                  Icons.add_rounded,
+                  size: 40,
+                  color: Colors.white70,
+                ),
+                onTap: () {
+                  showWorkerInfor(context);
+                },
+              );
+            }
+            final worker = workers[index];
+            return CustomButton(
+              child: Text(
+                worker.name,
+                style: const TextStyle(
+                  fontFamily: 'Signika',
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white70,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              onTap: () {},
+              onLongPress: () {
+                showWorkerInfor(context, worker: worker);
+              },
+            );
+          },
+          childCount: workers.length + 1,
+        ),
       ),
     );
   }

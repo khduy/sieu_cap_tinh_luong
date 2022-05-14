@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 part 'working_day.g.dart';
 
 @HiveType(typeId: 2)
-class WorkingDay extends Equatable {
+class WorkingDay extends HiveObject with EquatableMixin {
   @HiveField(0)
   final int date;
   @HiveField(1)
@@ -16,7 +16,7 @@ class WorkingDay extends Equatable {
   @HiveField(3)
   final bool hasBreak;
 
-  const WorkingDay({
+  WorkingDay({
     required this.date,
     required this.timeIn,
     required this.timeOut,

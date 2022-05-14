@@ -8,7 +8,7 @@ import 'working_day.dart';
 part 'worker.g.dart';
 
 @HiveType(typeId: 1)
-class Worker extends Equatable {
+class Worker extends HiveObject with EquatableMixin {
   @HiveField(0)
   final String name;
 
@@ -21,7 +21,7 @@ class Worker extends Equatable {
   @HiveField(3)
   final List<WorkingDay> workingDays;
 
-  const Worker({
+  Worker({
     required this.name,
     required this.basicSalary,
     required this.overtimeSalary,
