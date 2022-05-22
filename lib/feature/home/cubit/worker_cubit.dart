@@ -2,20 +2,20 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../data/model/worker.dart';
+import '../../../data/model/worker.dart';
 
 part 'worker_state.dart';
 
-class WorkerCubit extends Cubit<WorkerState> {
-  WorkerCubit() : super(WorkerInitial());
+class HomeCubit extends Cubit<HomeState> {
+  HomeCubit() : super(HomeInitial());
 
   void getWorkers() {
-    emit(WorkerLoadInProgress());
+    
     try {
       final workers = Hive.box<Worker>('workers').values.toList();
-      emit(WorkerLoadSuccess(workers: workers));
+      emit(HomeLoadSuccess(workers: workers));
     } catch (e) {
-      emit(WorkerLoadFailure(message: e.toString()));
+      emit(HomeLoadFailure(message: e.toString()));
     }
   }
 
@@ -23,9 +23,9 @@ class WorkerCubit extends Cubit<WorkerState> {
     try {
       final box = Hive.box<Worker>('workers');
       box.add(worker);
-      emit(WorkerLoadSuccess(workers: box.values.toList()));
+      emit(HomeLoadSuccess(workers: box.values.toList()));
     } catch (e) {
-      emit(WorkerLoadFailure(message: e.toString()));
+      emit(HomeLoadFailure(message: e.toString()));
     }
   }
 
@@ -33,9 +33,9 @@ class WorkerCubit extends Cubit<WorkerState> {
     try {
       final box = Hive.box<Worker>('workers');
       box.putAt(index, worker);
-      emit(WorkerLoadSuccess(workers: box.values.toList()));
+      emit(HomeLoadSuccess(workers: box.values.toList()));
     } catch (e) {
-      emit(WorkerLoadFailure(message: e.toString()));
+      emit(HomeLoadFailure(message: e.toString()));
     }
   }
 
@@ -43,9 +43,9 @@ class WorkerCubit extends Cubit<WorkerState> {
     try {
       final box = Hive.box<Worker>('workers');
       box.deleteAt(index);
-      emit(WorkerLoadSuccess(workers: box.values.toList()));
+      emit(HomeLoadSuccess(workers: box.values.toList()));
     } catch (e) {
-      emit(WorkerLoadFailure(message: e.toString()));
+      emit(HomeLoadFailure(message: e.toString()));
     }
   }
 }

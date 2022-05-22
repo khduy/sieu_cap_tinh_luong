@@ -1,36 +1,49 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final Widget child;
-  final VoidCallback onTap;
-  final VoidCallback? onLongPress;
-  final Color? color;
-
-  const CustomButton({
+  CustomButton({
     Key? key,
-    required this.child,
-    required this.onTap,
-    this.onLongPress,
-    this.color,
-  }) : super(key: key);
+    this.text,
+    this.child,
+    this.onPressed,
+    this.padding = const EdgeInsets.all(8),
+    this.color = Colors.indigo,
+  }) : super(key: key) {
+    assert(text != null || child != null);
+  }
+
+  final String? text;
+  final Widget? child;
+  final VoidCallback? onPressed;
+  final EdgeInsets padding;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: Colors.white12,
-      highlightColor: Colors.white12,
       splashFactory: InkRipple.splashFactory,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(5),
       child: Ink(
-        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          color: color ?? const Color(0xff313333),
+          borderRadius: BorderRadius.circular(5),
+          color: color,
         ),
-        child: Center(child: child),
+        child: Center(
+          child: Padding(
+            padding: padding,
+            child: child ??
+                Text(
+                  text!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+          ),
+        ),
       ),
-      onTap: onTap,
-      onLongPress: onLongPress,
+      onTap: onPressed,
     );
   }
 }
