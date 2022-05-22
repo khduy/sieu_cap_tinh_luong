@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:sieu_cap_tinh_luong/widgets/cancel_button.dart';
 import 'package:sieu_cap_tinh_luong/widgets/custom_button.dart';
 import '../config/extension/string_extension.dart';
 import '../data/model/worker.dart';
@@ -50,123 +51,138 @@ class _WorkerInforState extends State<WorkerInfor> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Text(
-                  'Thông tin',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Spacer(),
-                CustomButton(
-                  child: const Center(
-                    child: Icon(
-                      Icons.close,
+    final theme = Theme.of(context);
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Thông tin',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
-                  onPressed: () => Navigator.pop(context),
-                  color: Colors.black12,
-                )
-              ],
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Tên',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 4),
-            TextFormField(
-              controller: nameController,
-              autofocus: true,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              style: AppTheme.textFieldTextStyle,
-              decoration: AppTheme.textFieldDecoration.copyWith(
-                hintText: 'Aa',
-              ),
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Chưa nhập tên kìa';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Lương ngày',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 4),
-            TextFormField(
-              controller: basicController,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              style: AppTheme.textFieldTextStyle,
-              decoration: AppTheme.textFieldDecoration.copyWith(
-                hintText: '0',
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Lương tăng ca',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 4),
-            TextFormField(
-              controller: overtimeController,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              style: AppTheme.textFieldTextStyle,
-              decoration: AppTheme.textFieldDecoration.copyWith(
-                hintText: '0',
-              ),
-            ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (widget.worker != null)
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Xóa',
+                  const Spacer(),
+                  if (widget.worker != null)
+                    CustomButton(
+                      child: const Center(
+                        child: Icon(
+                          Icons.delete_outline,
+                          color: Colors.redAccent,
+                        ),
+                      ),
                       onPressed: () async {
                         await _delete(context);
                       },
-                      color: Colors.redAccent,
+                      color: Colors.black12,
+                    )
+                ],
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'Tên',
+                style: AppTheme.textFieldLabelStyle(context),
+              ),
+              const SizedBox(height: 4),
+              TextFormField(
+                controller: nameController,
+                autofocus: true,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                style: AppTheme.textFieldTextStyle,
+                decoration: AppTheme.textFieldDecoration.copyWith(
+                  hintText: 'Aa',
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Chưa nhập tên kìa';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Lương ngày',
+                          style: AppTheme.textFieldLabelStyle(context),
+                        ),
+                        const SizedBox(height: 4),
+                        TextFormField(
+                          controller: basicController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          style: AppTheme.textFieldTextStyle,
+                          decoration: AppTheme.textFieldDecoration.copyWith(
+                            hintText: '0',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                if (widget.worker != null) const SizedBox(width: 16),
-                Expanded(
-                  child: CustomButton(
-                    text: 'Lưu',
-                    onPressed: () async {
-                      await _save(context);
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Lương tăng ca',
+                          style: AppTheme.textFieldLabelStyle(context),
+                        ),
+                        const SizedBox(height: 4),
+                        TextFormField(
+                          controller: overtimeController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          style: AppTheme.textFieldTextStyle,
+                          decoration: AppTheme.textFieldDecoration.copyWith(
+                            hintText: '0',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  CancelButton(
+                    text: 'Đóng',
+                    onPressed: () {
+                      Navigator.of(context).pop();
                     },
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: CustomButton(
+                      text: 'Lưu',
+                      onPressed: () async {
+                        await _save(context);
+                      },
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

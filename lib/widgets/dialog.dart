@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sieu_cap_tinh_luong/widgets/cancel_button.dart';
 import 'package:sieu_cap_tinh_luong/widgets/custom_button.dart';
 
 import '../data/model/worker.dart';
@@ -14,19 +15,19 @@ Future<bool?> showDeleteConfirmDialog(
     builder: (context) => AlertDialog(
       scrollable: true,
       title: Text(title ?? 'Xác nhận'),
-      content: Text(content ?? 'Xác nhận xóa?'),
+      content: Text(
+        content ?? 'Xác nhận xóa?',
+        style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+      ),
       actions: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const SizedBox(width: 10),
-            Expanded(
-              child: CustomButton(
-                onPressed: () => Navigator.pop(context, false),
-                text: 'Không',
-                color: Colors.grey,
-              ),
+            CancelButton(
+              onPressed: () => Navigator.pop(context, false),
+              text: 'Không',
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
             Expanded(
               child: CustomButton(
                 onPressed: () => Navigator.pop(context, true),
@@ -34,11 +35,10 @@ Future<bool?> showDeleteConfirmDialog(
                 color: Colors.redAccent,
               ),
             ),
-            const SizedBox(width: 10),
           ],
         ),
       ],
-      actionsPadding: const EdgeInsets.only(bottom: 8),
+      actionsPadding: const EdgeInsets.symmetric(horizontal: 12),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
@@ -57,7 +57,10 @@ Future<void> showErrorDialog(
     builder: (context) => AlertDialog(
       scrollable: true,
       title: Text(title ?? 'Lỗi'),
-      content: Text(content ?? 'Có lỗi xảy ra, vui lòng thử lại sau'),
+      content: Text(
+        content ?? 'Có lỗi xảy ra, vui lòng thử lại sau',
+        style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+      ),
       actions: [
         CustomButton(
           onPressed: () => Navigator.pop(context),

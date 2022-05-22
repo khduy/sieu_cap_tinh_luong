@@ -15,7 +15,6 @@ class GridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashFactory: InkRipple.splashFactory,
       borderRadius: BorderRadius.circular(8),
       child: Ink(
         decoration: BoxDecoration(

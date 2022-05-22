@@ -7,7 +7,7 @@ class CustomButton extends StatelessWidget {
     this.child,
     this.onPressed,
     this.padding = const EdgeInsets.all(8),
-    this.color = Colors.indigo,
+    this.color,
   }) : super(key: key) {
     assert(text != null || child != null);
   }
@@ -16,17 +16,16 @@ class CustomButton extends StatelessWidget {
   final Widget? child;
   final VoidCallback? onPressed;
   final EdgeInsets padding;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashFactory: InkRipple.splashFactory,
       borderRadius: BorderRadius.circular(5),
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: color,
+          color: color ?? Theme.of(context).colorScheme.primary,
         ),
         child: Center(
           child: Padding(

@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
               color: Colors.white,
             ),
             splashRadius: 22,
+            splashColor: Colors.transparent,
             onPressed: context.read<DarkModeCubit>().toggle,
           ),
         ],
