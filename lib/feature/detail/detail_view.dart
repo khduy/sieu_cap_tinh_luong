@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sieu_cap_tinh_luong/data/model/worker.dart';
-import 'package:sieu_cap_tinh_luong/widgets/custom_button.dart';
+import '../../data/model/worker.dart';
+import '../../widgets/custom_button.dart';
 
 import '../../widgets/dialog.dart';
 

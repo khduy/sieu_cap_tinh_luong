@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:sieu_cap_tinh_luong/widgets/cancel_button.dart';
-import 'package:sieu_cap_tinh_luong/widgets/custom_button.dart';
+import 'cancel_button.dart';
+import 'custom_button.dart';
 import '../config/extension/string_extension.dart';
 import '../data/model/worker.dart';
 
@@ -83,8 +83,8 @@ class _WorkerInforState extends State<WorkerInfor> {
                           color: Colors.redAccent,
                         ),
                       ),
-                      onPressed: () async {
-                        await _delete(context);
+                      onPressed: () {
+                        _delete(context);
                       },
                       color: Colors.black12,
                     )
@@ -174,8 +174,8 @@ class _WorkerInforState extends State<WorkerInfor> {
                   Expanded(
                     child: CustomButton(
                       text: 'Lưu',
-                      onPressed: () async {
-                        await _save(context);
+                      onPressed: () {
+                        _save(context);
                       },
                     ),
                   ),
@@ -205,7 +205,7 @@ class _WorkerInforState extends State<WorkerInfor> {
           await boxworker.add(worker);
         }
 
-        Navigator.pop(context, true);
+        Navigator.pop(context);
       } catch (e) {
         showErrorDialog(context, content: e.toString());
       }
@@ -218,10 +218,10 @@ class _WorkerInforState extends State<WorkerInfor> {
       context,
       content: 'Xóa "${widget.worker?.name}"?',
     );
-    if (confirm ?? false) {
+    if (confirm == true) {
       try {
         await widget.worker!.delete();
-        Navigator.pop(context, true);
+        Navigator.pop(context);
       } catch (e) {
         showErrorDialog(context, content: e.toString());
       }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sieu_cap_tinh_luong/widgets/cancel_button.dart';
-import 'package:sieu_cap_tinh_luong/widgets/custom_button.dart';
+import 'cancel_button.dart';
+import 'custom_button.dart';
 
 import '../data/model/worker.dart';
 import 'worker_infor.dart';
@@ -74,8 +74,8 @@ Future<void> showErrorDialog(
   );
 }
 
-Future<bool?> showWorkerInfor(BuildContext context, {Worker? worker}) async {
-  final result = await showDialog<bool?>(
+void showWorkerInfor(BuildContext context, {Worker? worker}) {
+  showDialog(
     context: context,
     builder: (context) => Dialog(
       shape: const RoundedRectangleBorder(
@@ -87,5 +87,4 @@ Future<bool?> showWorkerInfor(BuildContext context, {Worker? worker}) async {
       ),
     ),
   );
-  return result;
 }
