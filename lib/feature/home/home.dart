@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:sieu_cap_tinh_luong/config/constant/constant.dart';
+import '../../config/constant/constant.dart';
 import '../../data/model/worker.dart';
 
 import '../../widgets/grid_item.dart';
 import '../../widgets/dialog.dart';
-import '../detail/detail_view.dart';
+import '../working_days/working_days.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Siêu cấp tính lương',
+          'Tính lương',
           style: TextStyle(
             fontWeight: FontWeight.w500,
           ),
@@ -88,7 +88,7 @@ class _GridWorkers extends StatelessWidget {
           child: Text(
             worker.name,
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 20,
               fontWeight: FontWeight.w500,
               color: theme.colorScheme.onSurface,
             ),
@@ -97,7 +97,8 @@ class _GridWorkers extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => DetailView(worker: worker)),
+              MaterialPageRoute(
+                  builder: (_) => WorkingDaysPage(worker: worker)),
             );
           },
           onLongPress: () {

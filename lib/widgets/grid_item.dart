@@ -28,8 +28,11 @@ class GridItem extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: child,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: child,
+          ),
         ),
       ),
       onTap: onTap,

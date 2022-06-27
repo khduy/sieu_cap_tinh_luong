@@ -3,6 +3,10 @@ extension StringExtension on String {
     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 
-  String toTitleCase() =>
-      replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+  String toTitleCase() {
+    return replaceAll(RegExp(' +'), ' ')
+        .split(' ')
+        .map((str) => str.toCapitalized())
+        .join(' ');
+  }
 }

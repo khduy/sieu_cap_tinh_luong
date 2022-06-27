@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'cancel_button.dart';
+import '../config/theme/theme.dart';
 import 'custom_button.dart';
 
 import '../data/model/worker.dart';
@@ -17,15 +17,18 @@ Future<bool?> showDeleteConfirmDialog(
       title: Text(title ?? 'Xác nhận'),
       content: Text(
         content ?? 'Xác nhận xóa?',
-        style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+        style: AppTheme.body(context),
       ),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CancelButton(
-              onPressed: () => Navigator.pop(context, false),
-              text: 'Không',
+            Expanded(
+              child: CustomButton(
+                onPressed: () => Navigator.pop(context, false),
+                text: 'Không',
+                color: Colors.grey,
+              ),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -59,7 +62,7 @@ Future<void> showErrorDialog(
       title: Text(title ?? 'Lỗi'),
       content: Text(
         content ?? 'Có lỗi xảy ra, vui lòng thử lại sau',
-        style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+        style: AppTheme.body(context),
       ),
       actions: [
         CustomButton(

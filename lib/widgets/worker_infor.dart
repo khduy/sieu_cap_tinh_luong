@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
-import 'cancel_button.dart';
+import '../config/utils/common_func.dart';
 import 'custom_button.dart';
 import '../config/extension/string_extension.dart';
 import '../data/model/worker.dart';
@@ -22,9 +21,6 @@ class WorkerInfor extends StatefulWidget {
 }
 
 class _WorkerInforState extends State<WorkerInfor> {
-  final _formKey = GlobalKey<FormState>();
-  final numberFormat = NumberFormat("##.##");
-
   late final TextEditingController nameController;
   late final TextEditingController basicController;
   late final TextEditingController overtimeController;
@@ -36,11 +32,11 @@ class _WorkerInforState extends State<WorkerInfor> {
       nameController = TextEditingController(text: widget.worker?.name);
 
       basicController = TextEditingController(
-        text: numberFormat.format(widget.worker?.basicSalary),
+        text: formatNumber(widget.worker!.basicSalary),
       );
 
       overtimeController = TextEditingController(
-        text: numberFormat.format(widget.worker?.overtimeSalary),
+        text: formatNumber(widget.worker!.overtimeSalary),
       );
     } else {
       nameController = TextEditingController();
@@ -51,145 +47,142 @@ class _WorkerInforState extends State<WorkerInfor> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Thông tin',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onSurface,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Thông tin',
+                  style: AppTheme.title(context),
+                ),
+                const Spacer(),
+                CustomButton(
+                  child: const Center(
+                    child: Icon(
+                      Icons.close,
+                      size: 18,
                     ),
                   ),
-                  const Spacer(),
-                  if (widget.worker != null)
-                    CustomButton(
-                      child: const Center(
-                        child: Icon(
-                          Icons.delete_outline,
-                          color: Colors.redAccent,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  color: Colors.black12,
+                )
+              ],
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Tên',
+              style: AppTheme.lable(context),
+            ),
+            const SizedBox(height: 4),
+            TextField(
+              controller: nameController,
+              autofocus: true,
+              style: AppTheme.textFieldStyle(context),
+              decoration: AppTheme.textFieldDecoration(
+                hintText: 'Aa',
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Lương ngày',
+                        style: AppTheme.lable(context),
+                      ),
+                      const SizedBox(height: 4),
+                      TextField(
+                        controller: basicController,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        style: AppTheme.textFieldStyle(context),
+                        decoration: AppTheme.textFieldDecoration(
+                          hintText: '0',
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Lương tăng ca',
+                        style: AppTheme.lable(context),
+                      ),
+                      const SizedBox(height: 4),
+                      TextField(
+                        controller: overtimeController,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        style: AppTheme.textFieldStyle(context),
+                        decoration: AppTheme.textFieldDecoration(
+                          hintText: '0',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                if (widget.worker != null)
+                  Expanded(
+                    child: CustomButton(
+                      text: 'Xóa',
                       onPressed: () {
                         _delete(context);
                       },
-                      color: Colors.black12,
-                    )
-                ],
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'Tên',
-                style: AppTheme.textFieldLabelStyle(context),
-              ),
-              const SizedBox(height: 4),
-              TextFormField(
-                controller: nameController,
-                autofocus: true,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: AppTheme.textFieldTextStyle,
-                decoration: AppTheme.textFieldDecoration.copyWith(
-                  hintText: 'Aa',
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Chưa nhập tên kìa';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Lương ngày',
-                          style: AppTheme.textFieldLabelStyle(context),
-                        ),
-                        const SizedBox(height: 4),
-                        TextFormField(
-                          controller: basicController,
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true,
-                          ),
-                          style: AppTheme.textFieldTextStyle,
-                          decoration: AppTheme.textFieldDecoration.copyWith(
-                            hintText: '0',
-                          ),
-                        ),
-                      ],
+                      color: Colors.redAccent,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Lương tăng ca',
-                          style: AppTheme.textFieldLabelStyle(context),
-                        ),
-                        const SizedBox(height: 4),
-                        TextFormField(
-                          controller: overtimeController,
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true,
-                          ),
-                          style: AppTheme.textFieldTextStyle,
-                          decoration: AppTheme.textFieldDecoration.copyWith(
-                            hintText: '0',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  CancelButton(
-                    text: 'Đóng',
+                if (widget.worker != null) const SizedBox(width: 8),
+                Expanded(
+                  child: CustomButton(
+                    text: 'Lưu',
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      _save(context);
                     },
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Lưu',
-                      onPressed: () {
-                        _save(context);
-                      },
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
   }
 
+  bool _validate() {
+    if (nameController.text.trim().isEmpty) {
+      showToastError('Tên không được để trống');
+      return false;
+    }
+
+    return true;
+  }
+
   Future<void> _save(BuildContext context) async {
-    if (_formKey.currentState?.validate() ?? false) {
+    if (_validate()) {
       final boxworker = Hive.box<Worker>('workers');
       var worker = Worker(
         name: nameController.text.trim().toTitleCase(),

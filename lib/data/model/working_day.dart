@@ -23,6 +23,14 @@ class WorkingDay extends HiveObject with EquatableMixin {
     required this.hasBreak,
   });
 
+  double get totalWorkingHour => timeOut - timeIn - (hasBreak ? 1 : 0);
+
+  // Dì 4
+  // double get calculateOvertime => totalWorkingHour - 8;
+
+  // Má
+  double get calculateOvertime => totalWorkingHour >= 8 ? totalWorkingHour - 8 : totalWorkingHour - 4;
+
   WorkingDay copyWith({
     int? date,
     double? timeIn,
@@ -57,7 +65,8 @@ class WorkingDay extends HiveObject with EquatableMixin {
 
   String toJson() => json.encode(toMap());
 
-  factory WorkingDay.fromJson(String source) => WorkingDay.fromMap(json.decode(source));
+  factory WorkingDay.fromJson(String source) =>
+      WorkingDay.fromMap(json.decode(source));
 
   @override
   String toString() {

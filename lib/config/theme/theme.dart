@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static final textFieldDecoration = InputDecoration(
-    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
-      borderSide: BorderSide.none,
-    ),
-    fillColor: Colors.black12,
-    filled: true,
-  );
-
-  static const textFieldTextStyle = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-  );
-
+  // ================ ThemeData ================
   static final light = ThemeData(
     colorScheme: ColorScheme(
       brightness: Brightness.light,
@@ -52,12 +38,54 @@ class AppTheme {
     hintColor: Colors.white54,
   );
 
-  static TextStyle textFieldLabelStyle(context) {
-    final theme = Theme.of(context);
+  // ================ TextStyle ================
+
+  static TextStyle body(BuildContext context) {
     return TextStyle(
-      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: Theme.of(context).colorScheme.onSurface,
+    );
+  }
+
+  static TextStyle title(BuildContext context) {
+    return TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      color: Theme.of(context).colorScheme.onSurface,
+    );
+  }
+
+  static TextStyle lable(BuildContext context) {
+    return TextStyle(
+      fontSize: 13,
       fontWeight: FontWeight.w500,
-      color: theme.colorScheme.onSurface,
+      color: Theme.of(context).colorScheme.onSurface,
+    );
+  }
+
+  static TextStyle textFieldStyle(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w500,
+      color: Theme.of(context).colorScheme.onSurface,
+    );
+  }
+
+  // ================ decoration ================
+
+  static InputDecoration textFieldDecoration({String? hintText}) {
+    return InputDecoration(
+      contentPadding: const EdgeInsets.all(12),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide.none,
+      ),
+      fillColor: Colors.black12,
+      filled: true,
+      isDense: true,
+      hintText: hintText,
+      errorStyle: const TextStyle(
+        color: Colors.redAccent,
+      ),
     );
   }
 }

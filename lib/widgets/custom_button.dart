@@ -20,13 +20,11 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return Material(
       borderRadius: BorderRadius.circular(5),
-      child: Ink(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: color ?? Theme.of(context).colorScheme.primary,
-        ),
+      color: color ?? Theme.of(context).colorScheme.primary,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(5),
         child: Center(
           child: Padding(
             padding: padding,
@@ -34,15 +32,15 @@ class CustomButton extends StatelessWidget {
                 Text(
                   text!,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
                 ),
           ),
         ),
+        onTap: onPressed,
       ),
-      onTap: onPressed,
     );
   }
 }
