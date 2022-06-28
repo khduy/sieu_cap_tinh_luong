@@ -26,10 +26,10 @@ class WorkingDay extends HiveObject with EquatableMixin {
   double get totalWorkingHour => timeOut - timeIn - (hasBreak ? 1 : 0);
 
   // Dì 4
-  // double get calculateOvertime => totalWorkingHour - 8;
+  double get calculateOvertime => totalWorkingHour - 8;
 
   // Má
-  double get calculateOvertime => totalWorkingHour >= 8 ? totalWorkingHour - 8 : totalWorkingHour - 4;
+  // double get calculateOvertime => totalWorkingHour >= 8 ? totalWorkingHour - 8 : totalWorkingHour - 4;
 
   WorkingDay copyWith({
     int? date,

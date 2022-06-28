@@ -18,26 +18,48 @@ enum TextFocus {
   ra,
 }
 
-class WorkingDaysPage extends StatelessWidget {
-  WorkingDaysPage({Key? key, required this.worker}) : super(key: key);
+class WorkingDaysPage extends StatefulWidget {
+  const WorkingDaysPage({Key? key, required this.worker}) : super(key: key);
   final Worker worker;
 
+  @override
+  State<WorkingDaysPage> createState() => _WorkingDaysPageState();
+}
+
+class _WorkingDaysPageState extends State<WorkingDaysPage> {
   final vaoController = TextEditingController();
+
   final veController = TextEditingController();
+
   final ngayController = TextEditingController();
+
   final scrollController = ScrollController();
 
   final vaoFNode = FocusNode();
+
   final veFNode = FocusNode();
-  final textFocus = TextFocus.vao;
+
+  var textFocus = TextFocus.vao;
 
   final breakCubit = BreakCubit();
+
+  @override
+  void initState() {
+    super.initState();
+    vaoFNode.addListener(() {
+      if (vaoFNode.hasFocus) textFocus = TextFocus.vao;
+    });
+
+    veFNode.addListener(() {
+      if (veFNode.hasFocus) textFocus = TextFocus.ra;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(worker.name),
+        title: Text(widget.worker.name),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -76,7 +98,7 @@ class WorkingDaysPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ResultPage(worker: worker),
+                        builder: (context) => ResultPage(worker: widget.worker),
                       ),
                     );
                   },
@@ -91,17 +113,18 @@ class WorkingDaysPage extends StatelessWidget {
           Expanded(
             child: ValueListenableBuilder<Box<Worker>>(
               valueListenable: Hive.box<Worker>(kWorkerBoxName).listenable(
-                keys: [worker.key],
+                keys: [widget.worker.key],
               ),
-              builder: (context, workers, widget) {
+              builder: (context, workers, _) {
                 return ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   controller: scrollController,
-                  itemCount: workers.get(worker.key)?.workingDays.length ?? 0,
+                  itemCount:
+                      workers.get(widget.worker.key)?.workingDays.length ?? 0,
                   itemBuilder: (context, index) {
                     return DismissibleTile(
                       key: UniqueKey(),
-                      workingDay: worker.workingDays[index],
+                      workingDay: widget.worker.workingDays[index],
                       onDismissed: (direction) {
                         _deleteWorkingDay(index);
                       },
@@ -328,10 +351,10 @@ class WorkingDaysPage extends StatelessWidget {
       hasBreak: breakCubit.state,
     );
 
-    Hive.box<Worker>(kWorkerBoxName).put(worker.key, worker);
+    Hive.box<Worker>(kWorkerBoxName).put(widget.worker.key, widget.worker);
 
-    worker.workingDays.add(workingDay);
-    worker.workingDays.sort(
+    widget.worker.workingDays.add(workingDay);
+    widget.worker.workingDays.sort(
       (a, b) => a.date.compareTo(b.date),
     );
 
@@ -349,12 +372,12 @@ class WorkingDaysPage extends StatelessWidget {
   }
 
   void _deleteWorkingDay(int index) {
-    worker.workingDays.removeAt(index);
-    Hive.box<Worker>(kWorkerBoxName).put(worker.key, worker);
+    widget.worker.workingDays.removeAt(index);
+    Hive.box<Worker>(kWorkerBoxName).put(widget.worker.key, widget.worker);
   }
 
   void _deleteAllWorkingDay() {
-    worker.workingDays.clear();
-    Hive.box<Worker>(kWorkerBoxName).put(worker.key, worker);
+    widget.worker.workingDays.clear();
+    Hive.box<Worker>(kWorkerBoxName).put(widget.worker.key, widget.worker);
   }
 }

@@ -56,26 +56,26 @@ class DismissibleTile extends StatelessWidget {
     );
   }
 
-  // Dì 4
-  // String handleResult(WorkingDay workingDay) {
-  //   final prefix = workingDay.totalWorkingHour > 8 ? '+' : '-';
-
-  //   // unsign overTime
-  //   double overTime = workingDay.calculateOvertime >= 0
-  //       ? workingDay.calculateOvertime
-  //       : workingDay.calculateOvertime * -1;
-
-  //   if (overTime == 0) return '1';
-
-  //   return '1 $prefix ${formatNumber(overTime)}';
-  // }
-
-  // Má
+  // Dì 4 ======================================
   String handleResult(WorkingDay workingDay) {
     final prefix = workingDay.totalWorkingHour > 8 ? '+' : '-';
 
-    double overTime = workingDay.calculateOvertime;
+    // unsign overTime
+    double overTime = workingDay.calculateOvertime >= 0
+        ? workingDay.calculateOvertime
+        : workingDay.calculateOvertime * -1;
 
-    return '$prefix ${formatNumber(overTime)}';
+    if (overTime == 0) return '1';
+
+    return '1 $prefix ${formatNumber(overTime)}';
   }
+
+  // Má ===================================
+  // String handleResult(WorkingDay workingDay) {
+  //   final prefix = workingDay.totalWorkingHour > 8 ? '+' : '-';
+
+  //   double overTime = workingDay.calculateOvertime;
+
+  //   return '$prefix ${formatNumber(overTime)}';
+  // }
 }

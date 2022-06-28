@@ -39,16 +39,16 @@ class _ResultPageState extends State<ResultPage> {
   initState() {
     super.initState();
     // Dì 4
-    // tongngay = widget.worker.workingDays.length.toDouble();
+    totalWorkingDay = widget.worker.workingDays.length.toDouble();
 
     // Má
-    for (var day in widget.worker.workingDays) {
-      if (day.totalWorkingHour >= 8) {
-        totalWorkingDay += 1;
-      } else {
-        totalWorkingDay += 0.5;
-      }
-    }
+    // for (var day in widget.worker.workingDays) {
+    //   if (day.totalWorkingHour >= 8) {
+    //     totalWorkingDay += 1;
+    //   } else {
+    //     totalWorkingDay += 0.5;
+    //   }
+    // }
 
     for (var element in widget.worker.workingDays) {
       totalOvertime += element.calculateOvertime;
