@@ -8,13 +8,20 @@ import 'feature/home/home.dart';
 import 'data/model/worker.dart';
 import 'data/model/working_day.dart';
 
+const Edition edition = Edition.mama;
+
+enum Edition {
+  mama,
+  di4,
+}
+
+
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(WorkerAdapter());
   Hive.registerAdapter(WorkingDayAdapter());
   await Hive.openBox<Worker>(kWorkerBoxName);
   await Hive.openBox<bool>(kDarkModeBoxName);
-
   runApp(const MyApp());
 }
 

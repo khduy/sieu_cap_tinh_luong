@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:sieu_cap_tinh_luong/main.dart';
 
 part 'working_day.g.dart';
 
@@ -25,11 +26,13 @@ class WorkingDay extends HiveObject with EquatableMixin {
 
   double get totalWorkingHour => timeOut - timeIn - (hasBreak ? 1 : 0);
 
-  // Dì 4
-  double get calculateOvertime => totalWorkingHour - 8;
-
-  // Má
-  // double get calculateOvertime => totalWorkingHour >= 8 ? totalWorkingHour - 8 : totalWorkingHour - 4;
+  double get calculateOvertime {
+    if (edition == Edition.mama) {
+      return totalWorkingHour >= 8 ? totalWorkingHour - 8 : totalWorkingHour - 4;
+    } else {
+      return totalWorkingHour - 8;
+    }
+  }
 
   WorkingDay copyWith({
     int? date,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sieu_cap_tinh_luong/main.dart';
 import '../../config/utils/common_func.dart';
 import '../../data/model/worker.dart';
 import '../../widgets/custom_button.dart';
@@ -38,17 +39,18 @@ class _ResultPageState extends State<ResultPage> {
   @override
   initState() {
     super.initState();
-    // Dì 4
-    totalWorkingDay = widget.worker.workingDays.length.toDouble();
 
-    // Má
-    // for (var day in widget.worker.workingDays) {
-    //   if (day.totalWorkingHour >= 8) {
-    //     totalWorkingDay += 1;
-    //   } else {
-    //     totalWorkingDay += 0.5;
-    //   }
-    // }
+    if (edition == Edition.mama) {
+      for (var day in widget.worker.workingDays) {
+        if (day.totalWorkingHour >= 8) {
+          totalWorkingDay += 1;
+        } else {
+          totalWorkingDay += 0.5;
+        }
+      }
+    } else {
+      totalWorkingDay = widget.worker.workingDays.length.toDouble();
+    }
 
     for (var element in widget.worker.workingDays) {
       totalOvertime += element.calculateOvertime;

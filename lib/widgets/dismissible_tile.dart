@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sieu_cap_tinh_luong/main.dart';
 import '../data/model/working_day.dart';
 
 import '../config/utils/common_func.dart';
@@ -56,26 +57,24 @@ class DismissibleTile extends StatelessWidget {
     );
   }
 
-  // Dì 4 ======================================
   String handleResult(WorkingDay workingDay) {
-    final prefix = workingDay.totalWorkingHour > 8 ? '+' : '-';
+    if (edition == Edition.mama) {
+      final prefix = workingDay.totalWorkingHour >= 8 ? '+' : '-';
 
-    // unsign overTime
-    double overTime = workingDay.calculateOvertime >= 0
-        ? workingDay.calculateOvertime
-        : workingDay.calculateOvertime * -1;
+      double overTime = workingDay.calculateOvertime;
 
-    if (overTime == 0) return '1';
+      return '$prefix ${formatNumber(overTime)}';
+    } else {
+      final prefix = workingDay.totalWorkingHour >= 8 ? '+' : '-';
 
-    return '1 $prefix ${formatNumber(overTime)}';
+      // unsign overTime
+      double overTime = workingDay.calculateOvertime >= 0
+          ? workingDay.calculateOvertime
+          : workingDay.calculateOvertime * -1;
+
+      if (overTime == 0) return '1';
+
+      return '1 $prefix ${formatNumber(overTime)}';
+    }
   }
-
-  // Má ===================================
-  // String handleResult(WorkingDay workingDay) {
-  //   final prefix = workingDay.totalWorkingHour > 8 ? '+' : '-';
-
-  //   double overTime = workingDay.calculateOvertime;
-
-  //   return '$prefix ${formatNumber(overTime)}';
-  // }
 }
