@@ -16,6 +16,8 @@ class GridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
+      onTap: onTap,
+      onLongPress: onLongPress,
       child: Ink(
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -35,8 +37,6 @@ class GridItem extends StatelessWidget {
           ),
         ),
       ),
-      onTap: onTap,
-      onLongPress: onLongPress,
     );
   }
 }

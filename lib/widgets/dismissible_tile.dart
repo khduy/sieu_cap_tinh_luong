@@ -21,6 +21,7 @@ class DismissibleTile extends StatelessWidget {
       key: key!,
       background: Container(
         padding: const EdgeInsets.only(left: 20),
+        color: Colors.redAccent,
         child: const Align(
           alignment: Alignment.centerLeft,
           child: Icon(
@@ -28,10 +29,10 @@ class DismissibleTile extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        color: Colors.redAccent,
       ),
       secondaryBackground: Container(
         padding: const EdgeInsets.only(right: 20),
+        color: Colors.redAccent,
         child: const Align(
           alignment: Alignment.centerRight,
           child: Icon(
@@ -39,7 +40,6 @@ class DismissibleTile extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        color: Colors.redAccent,
       ),
       onDismissed: onDismissed,
       child: ListTile(

@@ -18,10 +18,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(
           'Tính lương',
           style: TextStyle(
             fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
         actions: [

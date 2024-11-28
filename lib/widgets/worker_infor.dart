@@ -65,16 +65,16 @@ class _WorkerInforState extends State<WorkerInfor> {
                 ),
                 const Spacer(),
                 CustomButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  color: Colors.black12,
                   child: const Center(
                     child: Icon(
                       Icons.close,
                       size: 18,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  color: Colors.black12,
                 )
               ],
             ),
@@ -198,9 +198,13 @@ class _WorkerInforState extends State<WorkerInfor> {
           await boxworker.add(worker);
         }
 
-        Navigator.pop(context);
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
       } catch (e) {
-        showErrorDialog(context, content: e.toString());
+        if (context.mounted) {
+          showErrorDialog(context, content: e.toString());
+        }
       }
     }
   }
@@ -214,9 +218,13 @@ class _WorkerInforState extends State<WorkerInfor> {
     if (confirm == true) {
       try {
         await widget.worker!.delete();
-        Navigator.pop(context);
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
       } catch (e) {
-        showErrorDialog(context, content: e.toString());
+        if (context.mounted) {
+          showErrorDialog(context, content: e.toString());
+        }
       }
     }
   }

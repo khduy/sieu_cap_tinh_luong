@@ -25,6 +25,7 @@ class CustomButton extends StatelessWidget {
       color: color ?? Theme.of(context).colorScheme.primary,
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
+        onTap: onPressed,
         child: Center(
           child: Padding(
             padding: padding,
@@ -39,7 +40,6 @@ class CustomButton extends StatelessWidget {
                 ),
           ),
         ),
-        onTap: onPressed,
       ),
     );
   }

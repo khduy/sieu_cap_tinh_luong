@@ -66,10 +66,6 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
             child: Row(
               children: [
                 CustomButton(
-                  child: const Icon(
-                    Icons.delete_rounded,
-                    color: Colors.white,
-                  ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -84,13 +80,13 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                       _deleteAllWorkingDay();
                     }
                   },
+                  child: const Icon(
+                    Icons.delete_rounded,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 CustomButton(
-                  child: const Icon(
-                    Icons.view_stream,
-                    color: Colors.white,
-                  ),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   color: Colors.green,
@@ -102,6 +98,10 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                       ),
                     );
                   },
+                  child: const Icon(
+                    Icons.view_stream,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
@@ -196,7 +196,7 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                                   onChanged: (value) {
                                     breakCubit.setBreak(value!);
                                   },
-                                  fillColor: MaterialStateProperty.all(
+                                  fillColor: WidgetStateProperty.all(
                                     Theme.of(context).colorScheme.primary,
                                   ),
                                 ),

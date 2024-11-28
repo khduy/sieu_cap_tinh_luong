@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 class AppTheme {
   // ================ ThemeData ================
   static final light = ThemeData(
+    useMaterial3: true,
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: Colors.indigo,
       secondary: Colors.indigo,
       surface: Colors.white,
-      background: Colors.white,
       error: Colors.redAccent,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: Colors.black.withOpacity(0.7),
-      onBackground: Colors.black.withOpacity(0.7),
       onError: Colors.white,
     ),
     splashFactory: InkRipple.splashFactory,
@@ -21,17 +20,16 @@ class AppTheme {
   );
 
   static final dark = ThemeData(
+    useMaterial3: true,
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: Colors.indigo[400]!,
       secondary: Colors.indigo[400]!,
       surface: Colors.grey[800]!,
-      background: Colors.grey[900]!,
       error: Colors.redAccent,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: Colors.white,
-      onBackground: Colors.white,
       onError: Colors.white,
     ),
     splashFactory: InkRipple.splashFactory,
