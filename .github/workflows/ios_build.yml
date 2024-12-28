@@ -29,7 +29,8 @@ jobs:
           pod install
           
       - name: Build IPA
-        run: flutter build ipa --release --no-codesign
+        run: |
+        flutter build ipa --release --no-codesign
         cd build/ios/iphoneos
         mkdir Payload
         cp -r Runner.app Payload
