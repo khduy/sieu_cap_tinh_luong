@@ -40,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-ios
-          path: build/ios/iphoneos 
+          path: build/ios_build.tar.gz
