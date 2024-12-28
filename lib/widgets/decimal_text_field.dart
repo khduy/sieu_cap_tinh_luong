@@ -12,7 +12,9 @@ class DecimalTextField extends StatelessWidget {
     this.hintText,
     this.autoFocus = false,
     this.backgroundColor,
-  }) : super(key: key);
+    this.hintAsLabel = false,
+  })  : assert(!hintAsLabel || (hintAsLabel && hintText != null)),
+        super(key: key);
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -22,6 +24,7 @@ class DecimalTextField extends StatelessWidget {
   final String? hintText;
   final bool autoFocus;
   final Color? backgroundColor;
+  final bool hintAsLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,8 @@ class DecimalTextField extends StatelessWidget {
         ),
         fillColor: backgroundColor,
         filled: true,
-        hintText: hintText,
+        hintText: hintAsLabel ? null : hintText,
+        label: hintAsLabel ? Text(hintText!) : null,
       ),
       focusNode: focusNode,
       autofocus: autoFocus,
@@ -51,8 +55,7 @@ class DecimalTextField extends StatelessWidget {
             final text = newValue.text;
             if (text.isNotEmpty) double.parse(text);
             return newValue;
-            // ignore: empty_catches
-          } catch (e) {}
+          } catch (_) {}
           return oldValue;
         }),
       ],

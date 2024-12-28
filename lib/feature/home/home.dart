@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../config/constant/constant.dart';
-import '../../data/model/worker.dart';
 
-import '../../widgets/grid_item.dart';
+import '../../config/constant/constant.dart';
+import '../../model/worker.dart';
 import '../../widgets/dialog.dart';
+import '../../widgets/grid_item.dart';
+import '../log/log_page.dart';
 import '../working_days/working_days.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,20 +17,28 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = _isDarkmode(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
-          'Tính lương',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ),
+        title: const Text('Tính lương'),
         actions: [
           IconButton(
+            icon: const Icon(
+              Icons.bug_report,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (contex) => const LogPage(),
+                ),
+              );
+            },
+          ),
+          IconButton(
             icon: Icon(
-              _isDarkmode(context) ? Icons.light_mode : Icons.dark_mode,
+              isDarkMode ? Icons.light_mode : Icons.dark_mode,
               color: Colors.white,
             ),
             splashRadius: 22,
@@ -37,7 +46,7 @@ class HomePage extends StatelessWidget {
             onPressed: () {
               Hive.box<bool>(kDarkModeBoxName).put(
                 kDarkModeKey,
-                !_isDarkmode(context),
+                !isDarkMode,
               );
             },
           ),
@@ -71,7 +80,6 @@ class _GridWorkers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -89,10 +97,9 @@ class _GridWorkers extends StatelessWidget {
         return GridItem(
           child: Text(
             worker.name,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
-              color: theme.colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -100,7 +107,8 @@ class _GridWorkers extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => WorkingDaysPage(worker: worker)),
+                builder: (_) => WorkingDaysPage(worker: worker),
+              ),
             );
           },
           onLongPress: () {

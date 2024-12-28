@@ -20,9 +20,11 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = this.color ?? Theme.of(context).colorScheme.primary;
+    final textColor = ThemeData.estimateBrightnessForColor(color) == Brightness.light ? Colors.black : Colors.white;
     return Material(
       borderRadius: BorderRadius.circular(5),
-      color: color ?? Theme.of(context).colorScheme.primary,
+      color: color,
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
         onTap: onPressed,
@@ -32,10 +34,10 @@ class CustomButton extends StatelessWidget {
             child: child ??
                 Text(
                   text!,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white,
+                    color: textColor,
                   ),
                 ),
           ),

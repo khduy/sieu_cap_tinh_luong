@@ -1,6 +1,8 @@
 {
     "dart.flutterSdkPaths": [
-        "/Users/admin/flutter33"
+        "/Users/admin/flutter33",
+        "C:/flutter3"
     ],
-    "dart.flutterSdkPath": "~/flutter33"
+    "dart.flutterSdkPath": "C:/flutter3",
+    "dart.lineLength": 120
 }

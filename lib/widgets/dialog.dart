@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../config/theme/theme.dart';
-import 'custom_button.dart';
 
-import '../data/model/worker.dart';
+import '../config/theme/theme.dart';
+import '../model/worker.dart';
+import 'custom_button.dart';
 import 'worker_infor.dart';
 
 Future<bool?> showDeleteConfirmDialog(
@@ -41,7 +41,7 @@ Future<bool?> showDeleteConfirmDialog(
           ],
         ),
       ],
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 12),
+      actionsPadding: const EdgeInsets.all(12),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),

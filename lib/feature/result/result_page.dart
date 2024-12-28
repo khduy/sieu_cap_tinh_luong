@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sieu_cap_tinh_luong/main.dart';
-import '../../config/utils/common_func.dart';
-import '../../data/model/worker.dart';
+import '../../main.dart';
+import '../../utils/common_func.dart';
+import '../../model/worker.dart';
 import '../../widgets/custom_button.dart';
 
 import '../../widgets/decimal_text_field.dart';

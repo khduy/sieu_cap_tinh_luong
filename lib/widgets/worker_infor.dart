@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import '../config/utils/common_func.dart';
-import 'custom_button.dart';
-import '../config/extension/string_extension.dart';
-import '../data/model/worker.dart';
 
+import '../config/extension/string_extension.dart';
 import '../config/theme/theme.dart';
+import '../model/worker.dart';
+import '../utils/common_func.dart';
+import 'custom_button.dart';
 import 'dialog.dart';
 
 class WorkerInfor extends StatefulWidget {
@@ -201,7 +201,8 @@ class _WorkerInforState extends State<WorkerInfor> {
         if (context.mounted) {
           Navigator.pop(context);
         }
-      } catch (e) {
+      } catch (e, s) {
+        log(e, stacktrace: s);
         if (context.mounted) {
           showErrorDialog(context, content: e.toString());
         }
@@ -221,7 +222,8 @@ class _WorkerInforState extends State<WorkerInfor> {
         if (context.mounted) {
           Navigator.pop(context);
         }
-      } catch (e) {
+      } catch (e, s) {
+        log(e, stacktrace: s);
         if (context.mounted) {
           showErrorDialog(context, content: e.toString());
         }

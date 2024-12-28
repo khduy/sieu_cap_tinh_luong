@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sieu_cap_tinh_luong/main.dart';
-import '../data/model/working_day.dart';
+import '../main.dart';
+import '../model/working_day.dart';
 
-import '../config/utils/common_func.dart';
+import '../utils/common_func.dart';
 
 class DismissibleTile extends StatelessWidget {
   const DismissibleTile({
