@@ -6,10 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../config/constant/constant.dart';
 import '../model/log.dart';
 
 import '../model/working_day.dart';
+
+void hideKeyboard(BuildContext context) {
+  final currentFocus = FocusScope.of(context);
+  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+}
 
 void showToastError(String message) {
   BotToast.showText(
@@ -19,7 +27,37 @@ void showToastError(String message) {
 }
 
 void showLoading() {
-  BotToast.showLoading();
+  if (BotToast.cacheCancelFunc[BotToast.loadKey]?.isEmpty ?? true) {
+    BotToast.showCustomLoading(
+      crossPage: true,
+      backgroundColor: Colors.black.withOpacity(0.4),
+      toastBuilder: (_) {
+        return Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: const Color(0xFF424242),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          width: 150,
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SpinKitWave(
+                color: Colors.white,
+                size: 30,
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Chờ xí ...',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
 
 void hideLoading() {
@@ -101,8 +139,13 @@ Future<List<WorkingDay>?> analyzeImageWithGemini(File imageFile) async {
 
     return result;
   } catch (e, s) {
-    showToastError('Lỗi gòi');
-    log(e, stacktrace: s);
+    if (e.toString() == 'Invalid timecard or unreadable image') {
+      showToastError('Đúng cái thẻ chấm công không đó ??');
+    } else {
+      showToastError('Lỗi gòi');
+      log(e, stacktrace: s);
+    }
+    
     return null;
   }
 }

@@ -44,8 +44,12 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false />
 		<key>NSCameraUsageDescription</key>
-		<string>This app needs camera access to take photos.</string>
+		<string>Cần quyền truy cập camera để chụp thẻ chấm công.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>This app needs photos access to select photos from your library.</string>
-	</dict>
+		<string>Cần quyền truy cập thư viện để chọn thẻ chấm công đã chụp.</string>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+</dict>
 </plist>
