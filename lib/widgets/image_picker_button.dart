@@ -1,6 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../config/theme/theme.dart';
@@ -13,10 +15,22 @@ class ImagePickerButton extends StatelessWidget {
     this.onImageSelected,
   });
 
-  final Function(File)? onImageSelected;
+  final Function(dynamic)? onImageSelected;
 
   Future<void> _handleImageSelection(BuildContext context) async {
     hideKeyboard(context);
+
+    if (kIsWeb) {
+      final input = html.FileUploadInputElement()..accept = 'image/*';
+      input.click();
+
+      await input.onChange.first;
+      if (input.files?.isNotEmpty ?? false) {
+        final file = input.files![0];
+        onImageSelected?.call(file);
+      }
+      return;
+    }
 
     final result = await showModalBottomSheet<ImageSource?>(
       context: context,
@@ -55,7 +69,7 @@ class ImagePickerButton extends StatelessWidget {
       );
 
       if (image != null) {
-        onImageSelected?.call(File(image.path));
+        onImageSelected?.call(image);
       }
     } on PlatformException catch (_) {
       if (context.mounted) {

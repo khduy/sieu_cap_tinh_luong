@@ -1,5 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:image_picker/image_picker.dart';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +78,7 @@ void log(dynamic error, {StackTrace? stacktrace}) {
   Hive.box<String>(kLogBoxName).add(log.toString());
 }
 
-Future<List<WorkingDay>?> analyzeImageWithGemini(File imageFile) async {
+Future<List<WorkingDay>?> analyzeImageWithGemini(dynamic imageFile) async {
   try {
     final model = GenerativeModel(
       model: 'gemini-1.5-flash-latest',
@@ -105,11 +110,11 @@ Future<List<WorkingDay>?> analyzeImageWithGemini(File imageFile) async {
     If the image is NOT a timecard OR the times are unreadable:
     Return exactly: {"error": "INVALID_TIMECARD"}
     ''');
-
+    final imageBytes = await readFileAsBytes(imageFile);
     final content = [
       Content.multi([
         prompt,
-        DataPart('image/jpeg', imageFile.readAsBytesSync()),
+        DataPart('image/jpeg', imageBytes),
       ])
     ];
 
@@ -147,5 +152,26 @@ Future<List<WorkingDay>?> analyzeImageWithGemini(File imageFile) async {
     }
 
     return null;
+  }
+}
+
+/// Reads a file as bytes, supporting both web and mobile platforms
+Future<Uint8List> readFileAsBytes(dynamic file) async {
+  if (kIsWeb) {
+    if (file is html.File) {
+      final reader = html.FileReader();
+      reader.readAsArrayBuffer(file);
+      await reader.onLoad.first;
+      return reader.result as Uint8List;
+    }
+    throw Exception('Invalid file type for web platform');
+  } else {
+    if (file is XFile) {
+      return await file.readAsBytes();
+    }
+    if (file is File) {
+      return await file.readAsBytes();
+    }
+    throw Exception('Invalid file type for mobile platform');
   }
 }
