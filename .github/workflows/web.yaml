@@ -27,7 +27,7 @@ jobs:
         run: flutter pub get
         
       - name: Build
-        run: flutter build web --base-href "sieu_cap_tinh_luong/"
+        run: flutter build web --base-href "/sieu_cap_tinh_luong/"
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
