@@ -107,7 +107,7 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                 showLoading();
                 var result = await analyzeImageWithGemini(file);
                 hideLoading();
-      
+
                 if (result != null) {
                   widget.worker.workingDays.addAll(result);
                   await Hive.box<Worker>(kWorkerBoxName).put(widget.worker.key, widget.worker);
@@ -190,10 +190,12 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                           Expanded(
                             child: TextField(
                               controller: ngayController,
-                              keyboardType: TextInputType.numberWithOptions(
-                                decimal: true,
-                                signed: kIsWeb ? true : Platform.isIOS,
-                              ),
+                              keyboardType: kIsWeb
+                                  ? null
+                                  : TextInputType.numberWithOptions(
+                                      decimal: true,
+                                      signed: Platform.isIOS,
+                                    ),
                               autofocus: true,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16),

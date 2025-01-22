@@ -109,10 +109,12 @@ class _WorkerInforState extends State<WorkerInfor> {
                       const SizedBox(height: 4),
                       TextField(
                         controller: basicController,
-                        keyboardType: TextInputType.numberWithOptions(
-                          decimal: true,
-                          signed: kIsWeb ? true : Platform.isIOS,
-                        ),
+                        keyboardType: kIsWeb
+                            ? null
+                            : TextInputType.numberWithOptions(
+                                decimal: true,
+                                signed: Platform.isIOS,
+                              ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(
                           hintText: '0',
@@ -133,10 +135,12 @@ class _WorkerInforState extends State<WorkerInfor> {
                       const SizedBox(height: 4),
                       TextField(
                         controller: overtimeController,
-                        keyboardType: TextInputType.numberWithOptions(
-                          decimal: true,
-                          signed: kIsWeb ? true : Platform.isIOS,
-                        ),
+                        keyboardType: kIsWeb
+                            ? null
+                            : TextInputType.numberWithOptions(
+                                decimal: true,
+                                signed: Platform.isIOS,
+                              ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(
                           hintText: '0',

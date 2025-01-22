@@ -50,10 +50,12 @@ class DecimalTextField extends StatelessWidget {
       onSubmitted: onSubmitted,
       onChanged: onChanged,
       onEditingComplete: onEditingComplete,
-      keyboardType: TextInputType.numberWithOptions(
-        decimal: true,
-        signed: kIsWeb ? true : Platform.isIOS,
-      ),
+      keyboardType: kIsWeb
+          ? null
+          : TextInputType.numberWithOptions(
+              decimal: true,
+              signed: Platform.isIOS,
+            ),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r"[0-9.-]")),
         TextInputFormatter.withFunction((oldValue, newValue) {
