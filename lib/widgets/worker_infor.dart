@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -110,7 +111,7 @@ class _WorkerInforState extends State<WorkerInfor> {
                         controller: basicController,
                         keyboardType: TextInputType.numberWithOptions(
                           decimal: true,
-                          signed: Platform.isIOS,
+                          signed: kIsWeb ? false : Platform.isIOS,
                         ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(
@@ -134,7 +135,7 @@ class _WorkerInforState extends State<WorkerInfor> {
                         controller: overtimeController,
                         keyboardType: TextInputType.numberWithOptions(
                           decimal: true,
-                          signed: Platform.isIOS,
+                          signed: kIsWeb ? false : Platform.isIOS,
                         ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(

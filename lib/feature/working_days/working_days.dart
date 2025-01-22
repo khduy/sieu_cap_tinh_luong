@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -191,7 +192,7 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                               controller: ngayController,
                               keyboardType: TextInputType.numberWithOptions(
                                 decimal: true,
-                                signed: Platform.isIOS,
+                                signed: kIsWeb ? false : Platform.isIOS,
                               ),
                               autofocus: true,
                               decoration: InputDecoration(
