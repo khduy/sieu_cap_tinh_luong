@@ -111,7 +111,7 @@ class _WorkerInforState extends State<WorkerInfor> {
                         controller: basicController,
                         keyboardType: TextInputType.numberWithOptions(
                           decimal: true,
-                          signed: kIsWeb ? false : Platform.isIOS,
+                          signed: kIsWeb ? true : Platform.isIOS,
                         ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(
@@ -135,7 +135,7 @@ class _WorkerInforState extends State<WorkerInfor> {
                         controller: overtimeController,
                         keyboardType: TextInputType.numberWithOptions(
                           decimal: true,
-                          signed: kIsWeb ? false : Platform.isIOS,
+                          signed: kIsWeb ? true : Platform.isIOS,
                         ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(

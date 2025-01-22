@@ -192,7 +192,7 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                               controller: ngayController,
                               keyboardType: TextInputType.numberWithOptions(
                                 decimal: true,
-                                signed: kIsWeb ? false : Platform.isIOS,
+                                signed: kIsWeb ? true : Platform.isIOS,
                               ),
                               autofocus: true,
                               decoration: InputDecoration(

@@ -52,7 +52,7 @@ class DecimalTextField extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       keyboardType: TextInputType.numberWithOptions(
         decimal: true,
-        signed: kIsWeb ? false : Platform.isIOS,
+        signed: kIsWeb ? true : Platform.isIOS,
       ),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r"[0-9.-]")),
