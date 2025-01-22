@@ -77,7 +77,7 @@ Future<List<WorkingDay>?> analyzeImageWithGemini(File imageFile) async {
   try {
     final model = GenerativeModel(
       model: 'gemini-1.5-flash-latest',
-      apiKey: 'AIzaSyCcruql7Ll1WalM7JItFL5WkMUNd8JdLt4',
+      apiKey: GEMINI_API_KEY,
     );
 
     final prompt = TextPart('''
@@ -145,7 +145,7 @@ Future<List<WorkingDay>?> analyzeImageWithGemini(File imageFile) async {
       showToastError('Lỗi gòi');
       log(e, stacktrace: s);
     }
-    
+
     return null;
   }
 }
