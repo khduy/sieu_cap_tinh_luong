@@ -58,7 +58,7 @@ class DismissibleTile extends StatelessWidget {
   }
 
   String handleResult(WorkingDay workingDay) {
-    if (edition == Edition.mama) {
+    if (currentEdition == Edition.mama) {
       final prefix = workingDay.totalWorkingHour >= 8 ? '+' : '-';
 
       double overTime = workingDay.calculateOvertime;

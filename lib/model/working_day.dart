@@ -28,7 +28,7 @@ class WorkingDay extends HiveObject with EquatableMixin {
   double get totalWorkingHour => timeOut - timeIn - (hasBreak ? 1 : 0);
 
   double get calculateOvertime {
-    if (edition == Edition.mama) {
+    if (currentEdition == Edition.mama) {
       return totalWorkingHour >= 8 ? totalWorkingHour - 8 : totalWorkingHour - 4;
     } else {
       return totalWorkingHour - 8;

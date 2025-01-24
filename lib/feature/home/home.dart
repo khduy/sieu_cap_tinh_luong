@@ -5,6 +5,7 @@ import '../../config/constant/constant.dart';
 import '../../model/worker.dart';
 import '../../widgets/dialog.dart';
 import '../../widgets/grid_item.dart';
+import '../../widgets/edition_settings.dart';
 import '../log/log_page.dart';
 import '../working_days/working_days.dart';
 
@@ -22,7 +23,10 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Tính lương'),
         actions: [
+          const EditionSettings(),
           IconButton(
+            splashRadius: 22,
+            splashColor: Colors.transparent,
             icon: const Icon(
               Icons.bug_report,
               color: Colors.white,

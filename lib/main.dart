@@ -8,11 +8,26 @@ import 'feature/home/home.dart';
 import 'model/worker.dart';
 import 'model/working_day.dart';
 
-const Edition edition = Edition.mama;
-
 enum Edition {
   mama,
   di4,
+}
+
+Edition get currentEdition => Hive.box<String>(kEditionBoxName).get(kEditionKey)?.toEdition() ?? Edition.di4;
+
+extension EditionExtension on String {
+  Edition toEdition() {
+    return Edition.values.firstWhere(
+      (e) => e.toString() == this,
+      orElse: () => Edition.di4,
+    );
+  }
+}
+
+extension EditionStringExtension on Edition {
+  String toStorageString() {
+    return toString();
+  }
 }
 
 void main() async {
@@ -22,6 +37,7 @@ void main() async {
   await Hive.openBox<Worker>(kWorkerBoxName);
   await Hive.openBox<bool>(kDarkModeBoxName);
   await Hive.openBox<String>(kLogBoxName);
+  await Hive.openBox<String>(kEditionBoxName);
   runApp(const MyApp());
 }
 

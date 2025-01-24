@@ -40,7 +40,7 @@ class _ResultPageState extends State<ResultPage> {
   initState() {
     super.initState();
 
-    if (edition == Edition.mama) {
+    if (currentEdition == Edition.mama) {
       for (var day in widget.worker.workingDays) {
         if (day.totalWorkingHour >= 8) {
           totalWorkingDay += 1;
