@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -50,12 +49,10 @@ class DecimalTextField extends StatelessWidget {
       onSubmitted: onSubmitted,
       onChanged: onChanged,
       onEditingComplete: onEditingComplete,
-      keyboardType: kIsWeb
-          ? null
-          : TextInputType.numberWithOptions(
-              decimal: true,
-              signed: Platform.isIOS,
-            ),
+      keyboardType: TextInputType.numberWithOptions(
+        decimal: true,
+        signed: Platform.isIOS,
+      ),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r"[0-9.-]")),
         TextInputFormatter.withFunction((oldValue, newValue) {

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -11,19 +10,19 @@ import '../utils/common_func.dart';
 import 'custom_button.dart';
 import 'dialog.dart';
 
-class WorkerInfor extends StatefulWidget {
+class WorkerInfo extends StatefulWidget {
   final Worker? worker;
 
-  const WorkerInfor({
+  const WorkerInfo({
     Key? key,
     this.worker,
   }) : super(key: key);
 
   @override
-  State<WorkerInfor> createState() => _WorkerInforState();
+  State<WorkerInfo> createState() => _WorkerInfoState();
 }
 
-class _WorkerInforState extends State<WorkerInfor> {
+class _WorkerInfoState extends State<WorkerInfo> {
   late final TextEditingController nameController;
   late final TextEditingController basicController;
   late final TextEditingController overtimeController;
@@ -84,7 +83,7 @@ class _WorkerInforState extends State<WorkerInfor> {
             const SizedBox(height: 24),
             Text(
               'Tên',
-              style: AppTheme.lable(context),
+              style: AppTheme.label(context),
             ),
             const SizedBox(height: 4),
             TextField(
@@ -104,17 +103,15 @@ class _WorkerInforState extends State<WorkerInfor> {
                     children: [
                       Text(
                         'Lương ngày',
-                        style: AppTheme.lable(context),
+                        style: AppTheme.label(context),
                       ),
                       const SizedBox(height: 4),
                       TextField(
                         controller: basicController,
-                        keyboardType: kIsWeb
-                            ? null
-                            : TextInputType.numberWithOptions(
-                                decimal: true,
-                                signed: Platform.isIOS,
-                              ),
+                        keyboardType: TextInputType.numberWithOptions(
+                          decimal: true,
+                          signed: Platform.isIOS,
+                        ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(
                           hintText: '0',
@@ -130,17 +127,15 @@ class _WorkerInforState extends State<WorkerInfor> {
                     children: [
                       Text(
                         'Lương tăng ca',
-                        style: AppTheme.lable(context),
+                        style: AppTheme.label(context),
                       ),
                       const SizedBox(height: 4),
                       TextField(
                         controller: overtimeController,
-                        keyboardType: kIsWeb
-                            ? null
-                            : TextInputType.numberWithOptions(
-                                decimal: true,
-                                signed: Platform.isIOS,
-                              ),
+                        keyboardType: TextInputType.numberWithOptions(
+                          decimal: true,
+                          signed: Platform.isIOS,
+                        ),
                         style: AppTheme.textFieldStyle(context),
                         decoration: AppTheme.textFieldDecoration(
                           hintText: '0',
@@ -192,7 +187,7 @@ class _WorkerInforState extends State<WorkerInfor> {
 
   Future<void> _save(BuildContext context) async {
     if (_validate()) {
-      final boxworker = Hive.box<Worker>('workers');
+      final boxWorker = Hive.box<Worker>('workers');
       var worker = Worker(
         name: nameController.text.trim().toTitleCase(),
         basicSalary: double.tryParse(basicController.text) ?? 0,
@@ -202,9 +197,9 @@ class _WorkerInforState extends State<WorkerInfor> {
 
       try {
         if (widget.worker != null) {
-          await boxworker.put(widget.worker!.key, worker);
+          await boxWorker.put(widget.worker!.key, worker);
         } else {
-          await boxworker.add(worker);
+          await boxWorker.add(worker);
         }
 
         if (context.mounted) {

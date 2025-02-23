@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:image_picker/image_picker.dart';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -155,23 +152,12 @@ Future<List<WorkingDay>?> analyzeImageWithGemini(dynamic imageFile) async {
   }
 }
 
-/// Reads a file as bytes, supporting both web and mobile platforms
 Future<Uint8List> readFileAsBytes(dynamic file) async {
-  if (kIsWeb) {
-    if (file is html.File) {
-      final reader = html.FileReader();
-      reader.readAsArrayBuffer(file);
-      await reader.onLoad.first;
-      return reader.result as Uint8List;
-    }
-    throw Exception('Invalid file type for web platform');
-  } else {
-    if (file is XFile) {
-      return await file.readAsBytes();
-    }
-    if (file is File) {
-      return await file.readAsBytes();
-    }
-    throw Exception('Invalid file type for mobile platform');
+  if (file is XFile) {
+    return await file.readAsBytes();
   }
+  if (file is File) {
+    return await file.readAsBytes();
+  }
+  throw Exception('Invalid file type for mobile platform');
 }

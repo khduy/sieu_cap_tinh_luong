@@ -16,7 +16,7 @@ class AppTheme {
     );
   }
 
-  static TextStyle lable(BuildContext context) {
+  static TextStyle label(BuildContext context) {
     return const TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.w500,

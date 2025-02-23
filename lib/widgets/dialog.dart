@@ -85,7 +85,7 @@ void showWorkerInfor(BuildContext context, {Worker? worker}) {
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       insetPadding: const EdgeInsets.all(24),
-      child: WorkerInfor(
+      child: WorkerInfo(
         worker: worker,
       ),
     ),

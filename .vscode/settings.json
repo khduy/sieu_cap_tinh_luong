@@ -4,5 +4,6 @@
         "C:/flutter3"
     ],
     "dart.flutterSdkPath": "~/flutter33",
-    "dart.lineLength": 120
+    "dart.lineLength": 120,
+    "cSpell.language": "en,vi",
 }

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -190,9 +189,7 @@ class _WorkingDaysPageState extends State<WorkingDaysPage> {
                           Expanded(
                             child: TextField(
                               controller: ngayController,
-                              keyboardType: kIsWeb
-                                  ? null
-                                  : TextInputType.numberWithOptions(
+                              keyboardType: TextInputType.numberWithOptions(
                                       decimal: true,
                                       signed: Platform.isIOS,
                                     ),
